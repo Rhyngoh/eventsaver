@@ -1,5 +1,6 @@
 var express = require("express");
 var bodyParser = require("body-parser");
+var methodOverride = require("method-override");
 
 var app = express();
 var port = 3000;
@@ -10,13 +11,15 @@ app.use(express.static(__dirname + "/public"));
 // Parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
 
+// Override with POST having ?_method=DELETE
+app.use(methodOverride("_method"));
+
 var exphbs = require("express-handlebars");
 
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
 var mysql = require("mysql");
-
 var connection;
 if(process.env.JAWSDB_URL){
   connection = mysql.createConnection(process.env.JAWSDB_URL);
@@ -25,9 +28,10 @@ if(process.env.JAWSDB_URL){
   host: "localhost",
   user: "root",
   password: "root",
-  database: "event_saver_db"
+  database: "day_planner_db"
   });
 };
+
 connection.connect(function(err) {
   if (err) {
     console.error("error connecting: " + err.stack);
@@ -38,38 +42,48 @@ connection.connect(function(err) {
 
 });
 
-// Root get route
 app.get("/", function(req, res) {
+  connection.query("SELECT * FROM plans;", function(err, data) {
+    if (err) {
+      throw err;
+    }
 
-    connection.query("SELECT * FROM events;", function(err, data) {
-      if (err) throw err;
+    res.render("index", { plans: data });
 
-      // Test it
-      // console.log('The solution is: ', data);
-
-      // Test it
-      // res.send(data);
-
-      res.render("index", { events: data });
-    });
+  });
 });
 
-
-// Post route -> back to home
 app.post("/create", function(req, res) {
-
-    // Test it
-    // console.log('You sent, ' + req.body.event);
-
-    // Test it
-    // res.send('You sent, ' + req.body.event);
-
-  connection.query("INSERT INTO events (event) VALUES (?)", [req.body.event], function(err, result) {
-    if (err) throw err;
+  connection.query("INSERT INTO plans (plan) VALUES (?)", [req.body.plan], function(err, result) {
+    if (err) {
+      throw err;
+    }
 
     res.redirect("/");
   });
+});
 
+app.delete("/delete", function(req, res) {
+  connection.query("DELETE FROM plans WHERE id = ?", [req.body.id], function(err, result) {
+    if (err) {
+      throw err;
+    }
+
+    res.redirect("/");
+  });
+});
+
+app.put("/update", function(req, res) {
+
+  connection.query("UPDATE plans SET plan = ? WHERE id = ?", [
+    req.body.plan, req.body.id
+  ], function(err, result) {
+    if (err) {
+      throw err;
+    }
+
+    res.redirect("/");
+  });
 });
 
 app.listen(port);

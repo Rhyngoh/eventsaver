@@ -10,19 +10,17 @@ To run this file, we do the following in our Terminal:
 
 */
 
--- Create the database event_saver_db and specified it for use.
-CREATE DATABASE event_saver_db;
-USE event_saver_db;
+-- Create the database day_planner_db and specified it for use.
+CREATE DATABASE day_planner_db;
+USE day_planner_db;
 
--- Create the table events.
-CREATE TABLE events
+-- Create the table plans.
+CREATE TABLE plans
 (
 id int NOT NULL AUTO_INCREMENT,
-event varchar(255) NOT NULL,
+plan varchar(255) NOT NULL,
 PRIMARY KEY (id)
 );
 
 -- Insert a set of records.
-INSERT INTO events (event) VALUES ('Today I drew a picture of my friends and I buying kale.');
-INSERT INTO events (event) VALUES ('Shaan made a song.');
-INSERT INTO events (event) VALUES ('Davon is rich. He is flipping houses.');
+INSERT INTO plans (plan) VALUES ('Plan to fight a ninja.');
