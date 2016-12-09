@@ -1,19 +1,33 @@
 {
-  "name": "exercise3_day_planner",
+  "name": "eventsaver",
   "version": "1.0.0",
-  "description": "",
+  "description": "test deploying",
   "main": "server.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC",
   "dependencies": {
-    "body-parser": "^1.14.2",
-    "express": "^4.13.4",
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
     "express-handlebars": "^3.0.0",
-    "handlebars": "^4.0.5",
-    "method-override": "^2.3.5",
-    "mysql": "^2.10.2"
-  }
+    "handlebars": "^4.0.6",
+    "method-override": "^2.3.7",
+    "mysql": "^2.12.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Rhyngoh/eventsaver.git"
+  },
+  "keywords": [
+    "heroku",
+    "deploy"
+  ],
+  "author": "ryan ngoh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Rhyngoh/eventsaver/issues"
+  },
+  "homepage": "https://github.com/Rhyngoh/eventsaver#readme"
 }
